@@ -1,32 +1,37 @@
-function erasers() {
-  var colorDiv = document.getElementById("colors");
-  var buttonMade = document.createElement("div");
-  colorDiv.appendChild(buttonMade);
-  buttonMade.setAttribute("onclick", "erasingAll()");
-  buttonMade.innerHTML = "Clear";
-  buttonMade.className = "funcButtons";
+class Erasers {
+  constructor(paintSwatch) {
+    this.paintSwatch = paintSwatch;
 
-  colorDiv = document.getElementById("colors");
-  buttonMade = document.createElement("div");
-  colorDiv.appendChild(buttonMade);
-  buttonMade.setAttribute("onclick", "eraseSquare()");
-  buttonMade.innerHTML = "Eraser";
-  buttonMade.className = "funcButtons";
-}
+    this.init();
+  }
 
-var cPA = createPaintingAbility();
+  init() {
+    console.log(this.eraseAll());
+    const colorDiv = document.getElementById("colors");
+    const eraseAllButton = document.createElement("div");
+    eraseAllButton.addEventListener("click", this.eraseAll.bind(this));
+    eraseAllButton.innerHTML = "Clear";
+    eraseAllButton.className = "funcButtons";
+    colorDiv.appendChild(eraseAllButton);
 
-function erasingAll() {
-  for (var k = 0; k < painterGenerator.getRowHeight(); k++) {
-    for (var l = 0; l < painterGenerator.getRowWidth(); l++) {
-      var pixelThingToSetOnFirebase = {};
-      const cellID = l + " " + k;
-      var cell = document.getElementById(cellID);
-      cell.style.background = "rgb(255,255,255)";
+    const eraserButton = document.createElement("div");
+    eraserButton.addEventListener("click", this.eraseSquare.bind(this));
+    eraserButton.innerHTML = "Eraser";
+    eraserButton.className = "funcButtons";
+    colorDiv.appendChild(eraserButton);
+  }
+
+  eraseAll() {
+    for (let k = 0; k < this.paintSwatch.getRowHeight(); k++) {
+      for (let l = 0; l < this.paintSwatch.getRowWidth(); l++) {
+        const cellID = l + " " + k;
+        let cell = document.getElementById(cellID);
+        cell.style.background = "rgb(255,255,255)";
+      }
     }
   }
-}
 
-function eraseSquare() {
-  currentColor = "rgb(255,255,255)";
+  eraseSquare() {
+    this.paintSwatch.setCurrentColor("rgb(255,255,255)");
+  }
 }
