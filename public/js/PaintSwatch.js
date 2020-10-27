@@ -1,5 +1,6 @@
 class PaintSwatch {
-  constructor() {
+  constructor(mongo) {
+    this.mongo = mongo;
     this.colorHeight = 1;
     this.colorWidth = 8;
     this.rowHeight = 32;
@@ -81,10 +82,8 @@ class PaintSwatch {
     if (cell.style.backgroundColor !== this.currentColor) {
       cell.style.backgroundColor = this.currentColor;
       this.fillOnHover = true;
-      let divClicked = cell.id;
-      let divClickedStr = divClicked.toString();
-      let pixelThingToSetOnFirebase = {};
-      pixelThingToSetOnFirebase[divClickedStr] = this.currentColor;
+      let divIDClicked = cell.id;
+      this.updatePixelInCloud(divIDClicked);
     }
   }
 
@@ -96,6 +95,38 @@ class PaintSwatch {
         let pixelThingToSetOnFirebase = {};
         pixelThingToSetOnFirebase[divClicked] = this.currentColor;
       }
+    }
+  }
+
+  async updatePixelInCloud(id) {
+    const cellIDStr = id.toString();
+
+    try {
+      const query = { cellID: cellIDStr };
+      const update = {
+        color: this.currentColor,
+        cellID: cellIDStr,
+      };
+      const options = { upsert: true };
+
+      this.mongo
+        .updateOne(query, update, options)
+        .then((result) => {
+          const { matchedCount, modifiedCount, upsertedId } = result;
+          if (upsertedId) {
+            console.log(
+              `Document not found. Inserted a new document with _id: ${upsertedId}`
+            );
+          } else {
+            console.log(
+              `Successfully increased ${query.name} quantity by ${update.$inc.quantity}`
+            );
+            return data;
+          }
+        })
+        .catch((err) => console.error(`Failed to upsert document: ${err}`));
+    } catch (err) {
+      console.error(err);
     }
   }
 

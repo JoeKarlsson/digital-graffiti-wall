@@ -1,1 +1,1 @@
-const config = {};
+const CONFIG = {};

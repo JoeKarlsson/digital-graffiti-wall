@@ -1,0 +1,22 @@
+{
+  "name": "digital-graffiti-wall",
+  "version": "1.0.0",
+  "description": "## Quickstart",
+  "main": "index.js",
+  "scripts": {
+    "start": "TBD",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoeKarlsson/digital-graffiti-wall.git"
+  },
+  "keywords": [],
+  "author": "Joe <joekarlsson1@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoeKarlsson/digital-graffiti-wall/issues"
+  },
+  "homepage": "https://github.com/JoeKarlsson/digital-graffiti-wall#readme",
+  "dependencies": {}
+}
