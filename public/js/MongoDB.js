@@ -19,9 +19,6 @@ class MongoDB {
       const mongo = app.services.mongodb("mongodb-atlas");
       const mongoCollection = mongo.db(CONFIG.db).collection(CONFIG.collection);
 
-      const findAllPixels = {};
-      const data = await mongoCollection.find(findAllPixels);
-      console.log(data);
       return mongoCollection;
     } catch (err) {
       console.error(err);
