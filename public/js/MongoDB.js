@@ -29,30 +29,45 @@ class MongoDB {
   }
 
   async updatePixelInCloud(cellID, color) {
-    try {
-      const query = { cellID };
-      const update = {
-        color,
-        cellID,
-      };
-      const options = { upsert: true };
+    const query = { cellID };
+    const update = {
+      color,
+      cellID,
+    };
+    const options = { upsert: true };
 
-      this.mongoCollection
-        .updateOne(query, update, options)
-        .then((result) => {
-          const { matchedCount, modifiedCount, upsertedId } = result;
-          if (upsertedId) {
-            console.log(
-              `Document not found. Inserted a new document with _id: ${upsertedId}`
-            );
-          } else {
-            console.log(`Successfully updated cell ID ${cellID} to ${color}`);
-          }
-          return result;
-        })
-        .catch((err) => console.error(`Failed to upsert document: ${err}`));
-    } catch (err) {
-      console.error(err);
-    }
+    console.log(update);
+
+    return this.mongoCollection
+      .updateOne(query, update, options)
+      .then((result) => {
+        const { matchedCount, modifiedCount, upsertedId } = result;
+        if (upsertedId) {
+          console.log(
+            `Document not found. Inserted a new document with _id: ${upsertedId}`
+          );
+        } else {
+          console.log(`Successfully updated cell ID ${cellID} to ${color}`);
+        }
+        return result;
+      })
+      .catch((err) => console.error(`Failed to upsert document: ${err}`));
+  }
+
+  async updateAllPixels(color) {
+    const query = {};
+    const update = { $set: { color: color } };
+    const options = { upsert: true };
+
+    return this.mongoCollection
+      .updateMany(query, update, options)
+      .then((result) => {
+        const { matchedCount, modifiedCount } = result;
+        console.log(
+          `Successfully matched ${matchedCount} and modified ${modifiedCount} items.`
+        );
+        return result;
+      })
+      .catch((err) => console.error(`Failed to update items: ${err}`));
   }
 }

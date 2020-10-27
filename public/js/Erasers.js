@@ -1,6 +1,7 @@
 class Erasers {
-  constructor(paintSwatch) {
+  constructor(paintSwatch, mongo) {
     this.paintSwatch = paintSwatch;
+    this.mongo = mongo;
 
     this.init();
   }
@@ -28,6 +29,7 @@ class Erasers {
         cell.style.background = "rgb(255,255,255)";
       }
     }
+    this.mongo.updateAllPixels("rgb(255,255,255)");
   }
 
   eraseSquare() {
