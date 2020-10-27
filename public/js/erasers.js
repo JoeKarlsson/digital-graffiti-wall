@@ -6,13 +6,12 @@ class Erasers {
   }
 
   init() {
-    console.log(this.eraseAll());
     const colorDiv = document.getElementById("colors");
-    const eraseAllButton = document.createElement("div");
-    eraseAllButton.addEventListener("click", this.eraseAll.bind(this));
-    eraseAllButton.innerHTML = "Clear";
-    eraseAllButton.className = "funcButtons";
-    colorDiv.appendChild(eraseAllButton);
+    const clearButton = document.createElement("div");
+    clearButton.addEventListener("click", this.eraseAll.bind(this));
+    clearButton.innerHTML = "Clear";
+    clearButton.className = "funcButtons";
+    colorDiv.appendChild(clearButton);
 
     const eraserButton = document.createElement("div");
     eraserButton.addEventListener("click", this.eraseSquare.bind(this));

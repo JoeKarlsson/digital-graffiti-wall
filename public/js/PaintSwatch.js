@@ -82,9 +82,9 @@ class PaintSwatch {
       cell.style.backgroundColor = this.currentColor;
       this.fillOnHover = true;
       let divClicked = cell.id;
-      divClicked = divClicked.toString();
+      let divClickedStr = divClicked.toString();
       let pixelThingToSetOnFirebase = {};
-      pixelThingToSetOnFirebase[divClicked] = this.currentColor;
+      pixelThingToSetOnFirebase[divClickedStr] = this.currentColor;
     }
   }
 
