@@ -78,12 +78,12 @@ class PaintSwatch {
     this.currentColor = cell.style.backgroundColor;
   }
 
-  clickGrid(cell) {
+  async clickGrid(cell) {
     if (cell.style.backgroundColor !== this.currentColor) {
       cell.style.backgroundColor = this.currentColor;
       this.fillOnHover = true;
       let divIDClicked = cell.id;
-      this.updatePixelInCloud(divIDClicked);
+      await this.mongo.updatePixelInCloud(divIDClicked, this.currentColor);
     }
   }
 
@@ -91,42 +91,9 @@ class PaintSwatch {
     if (this.fillOnHover === true) {
       if (cell.style.backgroundColor !== this.currentColor) {
         cell.style.backgroundColor = this.currentColor;
-        let divClicked = cell.id;
-        let pixelThingToSetOnFirebase = {};
-        pixelThingToSetOnFirebase[divClicked] = this.currentColor;
+        const divIDClicked = cell.id;
+        this.mongo.updatePixelInCloud(divIDClicked, this.currentColor);
       }
-    }
-  }
-
-  async updatePixelInCloud(id) {
-    const cellIDStr = id.toString();
-
-    try {
-      const query = { cellID: cellIDStr };
-      const update = {
-        color: this.currentColor,
-        cellID: cellIDStr,
-      };
-      const options = { upsert: true };
-
-      this.mongo
-        .updateOne(query, update, options)
-        .then((result) => {
-          const { matchedCount, modifiedCount, upsertedId } = result;
-          if (upsertedId) {
-            console.log(
-              `Document not found. Inserted a new document with _id: ${upsertedId}`
-            );
-          } else {
-            console.log(
-              `Successfully increased ${query.name} quantity by ${update.$inc.quantity}`
-            );
-            return data;
-          }
-        })
-        .catch((err) => console.error(`Failed to upsert document: ${err}`));
-    } catch (err) {
-      console.error(err);
     }
   }
 
