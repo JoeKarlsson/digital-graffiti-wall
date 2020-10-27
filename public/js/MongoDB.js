@@ -36,19 +36,17 @@ class MongoDB {
     };
     const options = { upsert: true };
 
-    console.log(update);
-
     return this.mongoCollection
       .updateOne(query, update, options)
       .then((result) => {
         const { matchedCount, modifiedCount, upsertedId } = result;
-        if (upsertedId) {
-          console.log(
-            `Document not found. Inserted a new document with _id: ${upsertedId}`
-          );
-        } else {
-          console.log(`Successfully updated cell ID ${cellID} to ${color}`);
-        }
+        // if (upsertedId) {
+        //   console.log(
+        //     `Document not found. Inserted a new document with _id: ${upsertedId}`
+        //   );
+        // } else {
+        //   console.log(`Successfully updated cell ID ${cellID} to ${color}`);
+        // }
         return result;
       })
       .catch((err) => console.error(`Failed to upsert document: ${err}`));
@@ -63,9 +61,9 @@ class MongoDB {
       .updateMany(query, update, options)
       .then((result) => {
         const { matchedCount, modifiedCount } = result;
-        console.log(
-          `Successfully matched ${matchedCount} and modified ${modifiedCount} items.`
-        );
+        // console.log(
+        //   `Successfully matched ${matchedCount} and modified ${modifiedCount} items.`
+        // );
         return result;
       })
       .catch((err) => console.error(`Failed to update items: ${err}`));
