@@ -160,7 +160,6 @@ class PaintSwatch {
   }
 
   setCurrentColor(color) {
-    console.log(color);
     this.currentColor = color;
   }
 
