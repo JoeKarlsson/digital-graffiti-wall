@@ -6,15 +6,20 @@ class PaintSwatch {
     this.rowHeight = 32;
     this.rowWidth = 32;
     this.fillOnHover = false;
+    this.clearColor = "rgb(255,255,255)";
     this.currentColor = "rgb(0,0,0)";
-    this.countDiv = -1;
 
     this.init();
   }
 
   init() {
-    const colorButtton = document.getElementById("headerButton");
+    this.initColorPallete();
+    this.initPixelGrid();
+  }
+
+  initColorPallete() {
     const colorSwatch = document.getElementById("colors");
+    const colorButtton = document.getElementById("headerButton");
 
     document.getElementById("header").appendChild(colorButtton);
     colorButtton.addEventListener("click", () => {
@@ -25,6 +30,8 @@ class PaintSwatch {
       }
     });
 
+    let countDiv = -1;
+
     for (let i = 0; i < this.colorHeight; i++) {
       let newColorRow = document.createElement("div");
       newColorRow.className = "cRows";
@@ -32,33 +39,31 @@ class PaintSwatch {
       document.getElementById("colors").appendChild(newColorRow);
       for (let j = 0; j < this.colorWidth; j++) {
         let newColorCell = document.createElement("div");
-        this.countDiv++;
-        newColorCell.id = this.countDiv;
+        newColorCell.id = countDiv;
         newColorCell.className = "squares";
-        newColorCell.style.backgroundColor = colorSelection[this.countDiv];
+        newColorCell.style.backgroundColor = colorSelection[countDiv];
         newColorCell.addEventListener(
           "click",
           this.clickColor.bind(this, newColorCell)
         );
         document.getElementById("rows" + i).appendChild(newColorCell);
+        countDiv++;
       }
     }
+  }
 
-    for (let k = 0; k < this.rowHeight; k++) {
+  initPixelGrid() {
+    for (let y = 0; y < this.rowHeight; y++) {
       let newRow = document.createElement("div");
       newRow.className = "gRows";
-      newRow.id = "gridRows" + k;
+      newRow.id = "gridRows" + y;
       document.getElementById("grid").appendChild(newRow);
 
-      for (let l = 0; l < this.rowWidth; l++) {
+      for (let x = 0; x < this.rowWidth; x++) {
         let newCell = document.createElement("div");
 
-        this.countDiv++;
-        newCell.id = l + " " + k;
+        newCell.id = x + " " + y;
         newCell.className = "gridSquares";
-
-        newCell.x = l;
-        newCell.y = k;
 
         newCell.addEventListener(
           "mousedown",
@@ -68,22 +73,48 @@ class PaintSwatch {
           "mouseover",
           this.doFillOnHover.bind(this, newCell)
         );
-        document.getElementById("gridRows" + k).appendChild(newCell);
+        document.getElementById("gridRows" + y).appendChild(newCell);
       }
       document.body.addEventListener("mouseup", this.mouseUpUpdate.bind(this));
     }
+    this.updatePixelGrid();
+  }
+
+  updatePixelGrid() {
+    let pixelIndex = 0;
+    this.mongo.getCurrPixelGrid().then((pixels) => {
+      console.log(pixels);
+
+      for (let y = 0; y < this.rowHeight; y++) {
+        for (let x = 0; x < this.rowWidth; x++) {
+          if (
+            pixels[pixelIndex].coord.x === x &&
+            pixels[pixelIndex].coord.y === y
+          ) {
+            const cellID = x + " " + y;
+            const cell = document.getElementById(cellID);
+            cell.style.backgroundColor = pixels[pixelIndex].color;
+          }
+          pixelIndex++;
+        }
+      }
+    });
   }
 
   clickColor(cell) {
     this.currentColor = cell.style.backgroundColor;
   }
 
+  convertCellIdToArray(id) {
+    return id.split(" ").map((coord) => parseInt(coord));
+  }
+
   async clickGrid(cell) {
     if (cell.style.backgroundColor !== this.currentColor) {
       cell.style.backgroundColor = this.currentColor;
       this.fillOnHover = true;
-      let divIDClicked = cell.id;
-      await this.mongo.updatePixelInCloud(divIDClicked, this.currentColor);
+      let divIDArr = this.convertCellIdToArray(cell.id);
+      await this.mongo.updateOnePixel(divIDArr, this.currentColor);
     }
   }
 
@@ -91,8 +122,8 @@ class PaintSwatch {
     if (this.fillOnHover === true) {
       if (cell.style.backgroundColor !== this.currentColor) {
         cell.style.backgroundColor = this.currentColor;
-        const divIDClicked = cell.id;
-        this.mongo.updatePixelInCloud(divIDClicked, this.currentColor);
+        let divIDArr = this.convertCellIdToArray(cell.id);
+        this.mongo.updateOnePixel(divIDArr, this.currentColor);
       }
     }
   }
@@ -137,14 +168,6 @@ class PaintSwatch {
     this.rowWidth = newWidth;
   }
 
-  getCountDiv() {
-    return this.countDiv;
-  }
-
-  setCountDiv(newCount) {
-    this.countDiv = newCount;
-  }
-
   getFillOnHover() {
     return this.fillOnHover;
   }
@@ -159,22 +182,5 @@ class PaintSwatch {
 
   setCurrentColor(color) {
     this.currentColor = color;
-  }
-
-  getCountDiv() {
-    return this.countDiv;
-  }
-
-  setCountDiv(setter) {
-    this.countDiv = setter;
-  }
-
-  sendRGB() {
-    let rgb = this.currentColor;
-    let x = rgb
-      .substring(4, rgb.length - 1)
-      .replace(/ /g, "")
-      .split(",");
-    return x;
   }
 }

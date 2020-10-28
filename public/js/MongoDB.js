@@ -1,8 +1,6 @@
 class MongoDB {
   constructor() {
     this.mongoCollection = null;
-
-    this.updatePixelInCloud = this.updatePixelInCloud.bind(this);
   }
 
   async init() {
@@ -23,49 +21,95 @@ class MongoDB {
       this.mongoCollection = mongoService
         .db(CONFIG.db)
         .collection(CONFIG.collection);
+
+      await this.seedDB();
     } catch (err) {
-      console.error(err);
+      console.error(`Failed to connect to MongoDB: ${err}`);
     }
   }
 
-  async updatePixelInCloud(cellID, color) {
-    const query = { cellID };
-    const update = {
-      color,
-      cellID,
-    };
-    const options = { upsert: true };
+  async seedDB() {
+    //check if we need to seed the DB
+    await this.mongoCollection
+      .count({})
+      .then((count) => {
+        if (count !== 1024) {
+          console.log("Started to seed DB");
+          this.mongoCollection
+            .deleteMany({})
+            .then(() => {
+              const pixels = [];
+              for (let y = 0; y < 32; y++) {
+                for (let x = 0; x < 32; x++) {
+                  const pixel = {
+                    color: "rgb(255,255,255)",
+                    coord: {
+                      x,
+                      y,
+                    },
+                  };
+                  pixels.push(pixel);
+                }
+              }
 
-    return this.mongoCollection
-      .updateOne(query, update, options)
-      .then((result) => {
-        const { matchedCount, modifiedCount, upsertedId } = result;
-        // if (upsertedId) {
-        //   console.log(
-        //     `Document not found. Inserted a new document with _id: ${upsertedId}`
-        //   );
-        // } else {
-        //   console.log(`Successfully updated cell ID ${cellID} to ${color}`);
-        // }
-        return result;
+              return this.mongoCollection
+                .insertMany(pixels, {
+                  writeConcern: "majority",
+                })
+                .then((result) => {
+                  setTimeout(() => {}, 2000);
+                  console.log(`Database was seeded with ${result} documents`);
+                  return result;
+                })
+                .catch((err) => console.error(`Failed to seed the DB: ${err}`));
+            })
+            .catch((err) => console.error(`Failed to clear the DB: ${err}`));
+        }
       })
-      .catch((err) => console.error(`Failed to upsert document: ${err}`));
+      .catch((err) => console.error(`Failed to get collection count: ${err}`));
+  }
+
+  getCurrPixelGrid() {
+    return this.mongoCollection
+      .aggregate([
+        {
+          $match: {},
+        },
+        { $sort: { "coord.y": 1 } },
+      ])
+      .then((result) => result)
+      .catch((err) =>
+        console.error(`Failed to find and sort pixel grid: ${err}`)
+      );
+  }
+
+  async updateOnePixel(cellID, color) {
+    const query = {
+      $and: [{ "coord.x": { $eq: cellID[0] }, "coord.y": { $eq: cellID[1] } }],
+    };
+    const update = { $set: { color } };
+    const options = {};
+
+    return (
+      this.mongoCollection
+        // .find(query)
+        .findOneAndUpdate(query, update, options)
+        .then((result) => {
+          console.log(result);
+          return result;
+        })
+        .catch((err) => console.error(`Failed to upsert document: ${err}`))
+    );
   }
 
   async updateAllPixels(color) {
     const query = {};
-    const update = { $set: { color: color } };
+    const update = { $set: { color } };
     const options = { upsert: true };
 
     return this.mongoCollection
       .updateMany(query, update, options)
-      .then((result) => {
-        const { matchedCount, modifiedCount } = result;
-        // console.log(
-        //   `Successfully matched ${matchedCount} and modified ${modifiedCount} items.`
-        // );
-        return result;
-      })
+      .then((result) => result)
       .catch((err) => console.error(`Failed to update items: ${err}`));
   }
 }
