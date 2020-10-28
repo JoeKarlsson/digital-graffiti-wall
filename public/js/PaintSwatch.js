@@ -12,12 +12,12 @@ class PaintSwatch {
     this.init();
   }
 
-  init() {
-    this.initColorPallete();
-    this.initPixelGrid();
+  async init() {
+    await this.initColorPallete();
+    await this.initPixelGrid();
   }
 
-  initColorPallete() {
+  async initColorPallete() {
     const colorSwatch = document.getElementById("colors");
     const colorButtton = document.getElementById("headerButton");
 
@@ -52,7 +52,7 @@ class PaintSwatch {
     }
   }
 
-  initPixelGrid() {
+  async initPixelGrid() {
     for (let y = 0; y < this.rowHeight; y++) {
       let newRow = document.createElement("div");
       newRow.className = "gRows";
@@ -109,12 +109,12 @@ class PaintSwatch {
     return id.split(" ").map((coord) => parseInt(coord));
   }
 
-  async clickGrid(cell) {
+  clickGrid(cell) {
     if (cell.style.backgroundColor !== this.currentColor) {
       cell.style.backgroundColor = this.currentColor;
       this.fillOnHover = true;
       let divIDArr = this.convertCellIdToArray(cell.id);
-      await this.mongo.updateOnePixel(divIDArr, this.currentColor);
+      this.mongo.updateOnePixel(divIDArr, this.currentColor);
     }
   }
 

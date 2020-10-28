@@ -3,4 +3,8 @@ window.onload = async () => {
   await mongo.init();
   const paintSwatch = new PaintSwatch(mongo);
   new Erasers(paintSwatch, mongo);
+
+  setInterval(() => {
+    paintSwatch.updatePixelGrid();
+  }, 1000);
 };

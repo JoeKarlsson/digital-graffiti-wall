@@ -90,16 +90,10 @@ class MongoDB {
     const update = { $set: { color } };
     const options = {};
 
-    return (
-      this.mongoCollection
-        // .find(query)
-        .findOneAndUpdate(query, update, options)
-        .then((result) => {
-          console.log(result);
-          return result;
-        })
-        .catch((err) => console.error(`Failed to upsert document: ${err}`))
-    );
+    return this.mongoCollection
+      .findOneAndUpdate(query, update, options)
+      .then((result) => result)
+      .catch((err) => console.error(`Failed to upsert document: ${err}`));
   }
 
   async updateAllPixels(color) {
