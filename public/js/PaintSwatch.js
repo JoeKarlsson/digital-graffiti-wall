@@ -6,7 +6,6 @@ class PaintSwatch {
     this.rowHeight = 32;
     this.rowWidth = 32;
     this.fillOnHover = false;
-    this.clearColor = "rgb(255,255,255)";
     this.currentColor = "rgb(0,0,0)";
 
     this.init();
@@ -18,7 +17,7 @@ class PaintSwatch {
   }
 
   async initColorPallete() {
-    let countDiv = -1;
+    let pixelIdx = -1;
 
     for (let i = 0; i < this.colorHeight; i++) {
       let newColorRow = document.createElement("div");
@@ -27,15 +26,15 @@ class PaintSwatch {
       document.getElementById("colors").appendChild(newColorRow);
       for (let j = 0; j < this.colorWidth; j++) {
         let newColorCell = document.createElement("div");
-        newColorCell.id = countDiv;
+        newColorCell.id = pixelIdx;
         newColorCell.className = "squares";
-        newColorCell.style.backgroundColor = colorSelection[countDiv];
+        newColorCell.style.backgroundColor = colorSelection[pixelIdx];
         newColorCell.addEventListener(
           "click",
           this.clickColor.bind(this, newColorCell)
         );
         document.getElementById("rows" + i).appendChild(newColorCell);
-        countDiv++;
+        pixelIdx++;
       }
     }
   }
@@ -116,5 +115,21 @@ class PaintSwatch {
 
   mouseUpUpdate() {
     this.fillOnHover = false;
+  }
+
+  getRowHeight() {
+    return this.rowHeight;
+  }
+
+  getRowWidth() {
+    return this.rowWidth;
+  }
+
+  getCurrentColor() {
+    return this.currentColor;
+  }
+
+  setCurrentColor(color) {
+    this.currentColor = color;
   }
 }

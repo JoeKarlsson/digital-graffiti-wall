@@ -75,7 +75,7 @@ class MongoDB {
         {
           $match: {},
         },
-        { $sort: { "coord.y": 1 } },
+        { $sort: { "coord.y": 1, "coord.x": 1 } },
       ])
       .then((result) => result)
       .catch((err) =>
