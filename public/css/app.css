@@ -7,7 +7,7 @@ body {
 }
 
 #nescss > .container {
-  max-width: 980px;
+  max-width: 1300px;
   margin: 0 auto;
   margin-top: 200px;
 }
@@ -117,12 +117,25 @@ h2 > a {
   align-self: flex-end;
 }
 
-/* digital graffiti board */
+/* message */
+.message {
+  margin-bottom: 20px;
+}
 
+.nes-bcrikko {
+  height: 35px;
+}
+
+/* digital graffiti board */
 #digital-graffiti {
   line-height: 1;
   display: flex;
   justify-content: center;
+  min-width: 800px;
+}
+
+#colors {
+  min-width: 800px;
 }
 
 .funcButtons {
