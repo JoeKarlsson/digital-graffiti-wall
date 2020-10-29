@@ -1,11 +1,3 @@
-#use-landscape {
-  display: none;
-  width: 100%;
-  height: 100%;
-  font-size: 100px;
-  text-align: center;
-  font-family: "Silkscreen";
-}
 body {
   background-color: rgb(250, 250, 250);
   margin-left: auto;
@@ -24,7 +16,7 @@ h1 {
   text-align: center;
 }
 
-#c12 {
+#created-by {
   font-size: 15px;
 }
 
@@ -32,62 +24,11 @@ h1 {
   color: white;
 }
 
-#headerButton {
-  font-family: "Silkscreen";
-  color: white;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  border-style: solid;
-  margin-right: 5px;
-  border-radius: 5px;
-  padding-left: 2px;
-  padding-right: 2px;
-  margin-top: 5px;
-}
-
-#C {
-  color: red;
-}
-
-#firsto {
-  color: orange;
-}
-
-#l {
-  color: yellow;
-}
-
-#O {
-  color: green;
-}
-
-#r {
-  color: blue;
-}
-#s {
-  color: indigo;
-}
-#exclamation {
-  color: violet;
-}
-#pixelPainter {
+#digital-graffiti {
   display: flex;
   justify-content: center;
 }
 
-#dev-color {
-  display: flex;
-  align-items: row;
-  justify-content: space-between;
-}
-
-#devleague {
-  display: flex;
-  justify-content: flex-start;
-  background-color: black;
-  color: white;
-}
 .funcButtons {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.7);
@@ -95,6 +36,7 @@ h1 {
   border-style: solid;
   border-radius: 7px;
 }
+
 .colorclass {
   display: block;
   margin-left: auto;
@@ -178,20 +120,5 @@ h1 {
   }
   to {
     -ms-transform: rotate(360deg);
-  }
-}
-
-@media (min-device-width: 320px) and (max-device-width: 667px) and (orientation: portrait) {
-  #use-landscape {
-    display: block;
-  }
-  #pixelPainter {
-    display: none;
-  }
-}
-
-@media only screen and (min-device-width: 320px) and (max-device-width: 667px) and (orientation: landscape) {
-  #use-landscape {
-    display: none;
   }
 }
