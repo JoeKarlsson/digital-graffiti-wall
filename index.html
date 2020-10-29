@@ -12,8 +12,8 @@
 
     <title>Digital Graffiti Board</title>
 
-    <script src="./lib/dialog-polyfill.js"></script>
-    <script src="./lib/highlight.js"></script>
+    <!-- <script src="./lib/dialog-polyfill.js"></script>
+    <script src="./lib/highlight.js"></script> -->
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Digital Graffiti Board" />
@@ -62,28 +62,27 @@
             </div>
         </header>
         <div class="container">
-            <a class="github-link" :class="{ active:  scrollPos < 200 }" href="https://github.com/nostalgic-css/NES.css"
-                target="_blank" rel="noopener" @mouseover="startAnimate" @mouseout="stopAnimate">
+            <a class="github-link active" href="https://github.com/JoeKarlsson/digital-graffiti-wall" target="_blank"
+                rel="noopener" @mouseover="startAnimate" @mouseout="stopAnimate">
                 <p class="nes-balloon from-right">Fork me<br />on GitHub</p>
                 <i class="nes-octocat" :class="animateOctocat ? 'animate' : ''"></i>
             </a>
             <main class="main-content">
-
-                <div id="colors" class="colorclass"></div>
-                <div id="digital-graffiti">
+                <div id="colors" class="nes-container is-centered topic"></div>
+                <div id="digital-graffiti" class="nes-container is-centered">
                     <div id="grid" class="gridclass"></div>
                 </div>
-            </main>
         </div>
-        <footer>
-            <p>
-                <span>&copy;<span id="copyright-year"></span></span>
-                <a href="https://www.joekarlsson.com/" target="_blank" rel="noopener">Joe Karlsson</a>
-                <span>-</span>
-                <a href="https://twitter.com/joekarlsson1" target="_blank" rel="noopener">@JoeKarlsson1</a>
-            </p>
-        </footer>
-
+        </main>
+    </div>
+    <footer>
+        <p>
+            <span>&copy;<span id="copyright-year"></span></span>
+            <a href="https://www.joekarlsson.com/" target="_blank" rel="noopener">Joe Karlsson</a>
+            <span>-</span>
+            <a href="https://twitter.com/joekarlsson1" target="_blank" rel="noopener">@JoeKarlsson1</a>
+        </p>
+    </footer>
 
     </div>
     <script>

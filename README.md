@@ -1,5 +1,7 @@
 # digital-graffiti-wall
 
+ The Digital Graffiti Board is an interactive art installation that aims to make audience interaction with virtual speakers more collaborative. Artists will be able to draw on a shared wall, and they will be able to see their creations be shared IRL on a RGB LED grid LIVE! This piece use MongoDB Realm to sync users' data in real-time across all t… 
+
 ## Quickstart
 
 ### 1. Clone example repository

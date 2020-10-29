@@ -8,17 +8,18 @@ class Erasers {
 
   init() {
     const colorDiv = document.getElementById("colors");
-    const clearButton = document.createElement("div");
-    clearButton.addEventListener("click", this.eraseAll.bind(this));
-    clearButton.innerHTML = "Clear";
-    clearButton.className = "funcButtons";
-    colorDiv.appendChild(clearButton);
 
     const eraserButton = document.createElement("div");
     eraserButton.addEventListener("click", this.eraseSquare.bind(this));
     eraserButton.innerHTML = "Eraser";
-    eraserButton.className = "funcButtons";
+    eraserButton.className = "nes-btn";
     colorDiv.appendChild(eraserButton);
+
+    const clearButton = document.createElement("div");
+    clearButton.addEventListener("click", this.eraseAll.bind(this));
+    clearButton.innerHTML = "Clear";
+    clearButton.className = "nes-btn is-warning";
+    colorDiv.appendChild(clearButton);
   }
 
   eraseAll() {

@@ -21,13 +21,13 @@ class PaintSwatch {
 
     for (let i = 0; i < this.colorHeight; i++) {
       let newColorRow = document.createElement("div");
-      newColorRow.className = "cRows";
+      // newColorRow.className = "cRows";
       newColorRow.id = "rows" + i;
       document.getElementById("colors").appendChild(newColorRow);
       for (let j = 0; j < this.colorWidth; j++) {
         let newColorCell = document.createElement("div");
         newColorCell.id = pixelIdx;
-        newColorCell.className = "squares";
+        newColorCell.className = "nes-btn";
         newColorCell.style.backgroundColor = colorSelection[pixelIdx];
         newColorCell.addEventListener(
           "click",
