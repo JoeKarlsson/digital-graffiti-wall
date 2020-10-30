@@ -232,26 +232,6 @@ h2 > a {
   }
 }
 
-/* Scroll back to top */
-.scroll-btn {
-  position: fixed;
-  bottom: -60px;
-  right: 2rem;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
-  transition: all 0.3s ease;
-}
-.scroll-btn.active {
-  bottom: 25px;
-}
-.scroll-btn > span {
-  display: block;
-  transform: rotateZ(90deg);
-}
-
-img.lazy {
-  background-color: #d3d3d3;
-}
-
 @media screen and (max-width: calc(980px - 4rem)) {
   header > .container {
     margin: 0 4rem;
@@ -280,5 +260,17 @@ img.lazy {
 @media screen and (max-width: 580px) {
   #nescss > .container {
     margin-top: 190px;
+  }
+
+  header {
+    display: none;
+  }
+
+  #nescss > .container {
+    margin-top: 0px;
+  }
+
+  #welcome {
+    display: none;
   }
 }

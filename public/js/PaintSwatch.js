@@ -44,7 +44,8 @@ class PaintSwatch {
       let newRow = document.createElement("div");
       newRow.className = "gRows";
       newRow.id = "gridRows" + y;
-      document.getElementById("grid").appendChild(newRow);
+      const grid = document.getElementById("grid");
+      grid.appendChild(newRow);
 
       for (let x = 0; x < this.rowWidth; x++) {
         let newCell = document.createElement("div");
@@ -53,16 +54,31 @@ class PaintSwatch {
         newCell.className = "gridSquares";
 
         newCell.addEventListener(
-          "mousedown",
+          "pointerdown",
           this.clickGrid.bind(this, newCell)
         );
+
         newCell.addEventListener(
-          "mouseover",
+          "pointerover",
           this.doFillOnHover.bind(this, newCell)
         );
+
+        newCell.addEventListener(
+          "pointerenter",
+          this.doFillOnHover.bind(this, newCell)
+        );
+
         document.getElementById("gridRows" + y).appendChild(newCell);
       }
-      document.body.addEventListener("mouseup", this.mouseUpUpdate.bind(this));
+
+      document.body.addEventListener(
+        "pointerup",
+        this.mouseUpUpdate.bind(this)
+      );
+      document.body.addEventListener(
+        "pointercancel",
+        this.mouseUpUpdate.bind(this)
+      );
     }
     this.updatePixelGrid();
   }
@@ -97,13 +113,14 @@ class PaintSwatch {
   clickGrid(cell) {
     if (cell.style.backgroundColor !== this.currentColor) {
       cell.style.backgroundColor = this.currentColor;
-      this.fillOnHover = true;
       let divIDArr = this.convertCellIdToArray(cell.id);
       this.mongo.updateOnePixel(divIDArr, this.currentColor);
     }
+    this.fillOnHover = true;
   }
 
   doFillOnHover(cell) {
+    console.log(cell);
     if (this.fillOnHover === true) {
       if (cell.style.backgroundColor !== this.currentColor) {
         cell.style.backgroundColor = this.currentColor;
@@ -111,6 +128,50 @@ class PaintSwatch {
         this.mongo.updateOnePixel(divIDArr, this.currentColor);
       }
     }
+  }
+
+  touch2Mouse(e) {
+    let theTouch = e.changedTouches[0];
+    let mouseEv;
+
+    switch (e.type) {
+      case "touchstart":
+        mouseEv = "mousedown";
+        break;
+      case "touchend":
+        mouseEv = "mouseup";
+        break;
+      case "touchmove":
+        mouseEv = "mousemove";
+        break;
+      // case "touchmove":
+      //   mouseEv = "mouseover";
+      //   break;
+      default:
+        return;
+    }
+
+    var mouseEvent = document.createEvent("MouseEvent");
+    mouseEvent.initMouseEvent(
+      mouseEv,
+      true,
+      true,
+      window,
+      1,
+      theTouch.screenX,
+      theTouch.screenY,
+      theTouch.clientX,
+      theTouch.clientY,
+      false,
+      false,
+      false,
+      false,
+      0,
+      null
+    );
+    theTouch.target.dispatchEvent(mouseEvent);
+
+    e.preventDefault();
   }
 
   mouseUpUpdate() {

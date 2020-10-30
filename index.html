@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="description" content="Collaborative realtime graffiti wall" />
     <meta name="keywords" content="digital art, griffit, mongodb" />
@@ -27,9 +27,9 @@
         content="https://raw.githubusercontent.com/JoeKarlsson/digital-graffiti-wall/main/public/img/digitial-graffiti-board-twitter.png" />
 
     <link rel="apple-touch-icon" sizes="180x180" href="public/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="public/img/favicon//favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="public/img/favicon//favicon-16x16.png">
-    <link rel="manifest" href="public/img/favicon//site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="public/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="public/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="public/img/favicon/site.webmanifest">
 
     <link href="public/css/nes.min.css" rel="stylesheet" media="screen" />
     <link href="public/css/app.css" rel="stylesheet" media="screen" />
@@ -72,25 +72,27 @@
                 </div>
                 <div id="colors" class="nes-container is-centered is-dark topic"></div>
             </main>
-            <section class="nes-container is-centered ">
-                <section class="message-list">
-                    <section class="message -left">
-                        <i class="nes-bcrikko"></i>
-                        <!-- Balloon -->
-                        <div class="nes-balloon from-left">
-                            <p>Welcome to the Digital Griffiti Wall!</p>
-                        </div>
-                    </section>
+            <span id="welcome">
+                <section class="nes-container is-centered ">
+                    <section class="message-list">
+                        <section class="message -left">
+                            <i class="nes-bcrikko"></i>
+                            <!-- Balloon -->
+                            <div class="nes-balloon from-left">
+                                <p>Welcome to the Digital Griffiti Wall!</p>
+                            </div>
+                        </section>
 
-                    <section class="message -right">
-                        <!-- Balloon -->
-                        <div class="nes-balloon from-right">
-                            <p>Please be respectful, Thank you!</p>
-                        </div>
-                        <i class="nes-bcrikko"></i>
+                        <section class="message -right">
+                            <!-- Balloon -->
+                            <div class="nes-balloon from-right">
+                                <p>Please be respectful, Thank you!</p>
+                            </div>
+                            <i class="nes-bcrikko"></i>
+                        </section>
                     </section>
                 </section>
-            </section>
+            </span>
         </div>
     </div>
     <footer>

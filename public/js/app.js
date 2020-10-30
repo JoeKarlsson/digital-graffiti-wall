@@ -6,5 +6,5 @@ window.onload = async () => {
 
   setInterval(() => {
     paintSwatch.updatePixelGrid();
-  }, 4000);
+  }, 5000);
 };
