@@ -2,18 +2,13 @@
 
 ![Graffiti wall demo: people painting pixels on the shared grid in the browser](https://user-images.githubusercontent.com/4650739/97628255-74618a80-19fa-11eb-8c7e-0d7b24536d80.gif)
 
-At a tech talk, the audience mostly sits there and types questions into a chat.
-The Digital Graffiti Wall let everyone in the room paint on one shared 32x32
-canvas from their phones, and every pixel showed up on a real LED grid. The best
-part was watching a room organize itself: someone starts drawing a shape and
+At a tech talk, the audience mostly sits there and types questions into a chat,
+and I wanted everyone in the room to make something together instead. The
+Digital Graffiti Wall let everyone paint on one shared canvas from their phones,
+and every pixel lit up on a real LED grid. Someone starts drawing a shape and
 others join in, or groups fight over the corners.
 
 [Read the full statement](https://www.joekarlsson.com/work/digital-graffiti-wall/)
-
-> **Retired:** the wall has been replaced by
-> [PixelPane](https://www.joekarlsson.com/work/pixelpane/)
-> ([source](https://github.com/JoeKarlsson/pixelpane)). MongoDB Realm has been
-> shut down, so this code no longer runs as is. It's kept for reference.
 
 ## Quick start
 
@@ -26,6 +21,11 @@ cd digital-graffiti-wall
 cp public/js/CONFIG_EXAMPLE.js public/js/CONFIG.js   # add your Realm app ID, database and collection
 python3 -m http.server 3000                          # open http://localhost:3000
 ```
+
+> **Retired:** the wall has been replaced by
+> [PixelPane](https://www.joekarlsson.com/work/pixelpane/)
+> ([source](https://github.com/JoeKarlsson/pixelpane)). MongoDB Realm has been
+> shut down, so this code no longer runs as is. It's kept for reference.
 
 ## Development
 
