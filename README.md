@@ -6,6 +6,12 @@ The Digital Graffiti Board is an interactive art installation that aims to make 
 
 ![griffiti-board-demo](https://user-images.githubusercontent.com/4650739/97628255-74618a80-19fa-11eb-8c7e-0d7b24536d80.gif)
 
+## Artist statement
+
+At a tech talk, the audience mostly sits there and types questions into a chat. I wanted everyone in the room to make something together instead, so I built a wall they could all paint on at once. I've retired the wall, but the LED panel still sits on the shelf next to my desk. In 2026 it became PixelPane.
+
+[Read the full statement](https://www.joekarlsson.com/work/digital-graffiti-wall/).
+
 ## Quickstart
 
 ### 1. Clone example repository
