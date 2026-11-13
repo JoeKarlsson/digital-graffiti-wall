@@ -17,7 +17,7 @@ class MongoDB {
       // an authenticated user is required to access a MongoDB instance
       user = await app.logIn(Realm.Credentials.anonymous());
 
-      const mongoService = app.services.mongodb("mongodb-atlas");
+      const mongoService = user.mongoClient("mongodb-atlas");
       this.mongoCollection = mongoService
         .db(CONFIG.db)
         .collection(CONFIG.collection);
